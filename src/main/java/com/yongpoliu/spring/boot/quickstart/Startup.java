@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @EnableAutoConfiguration
-public class Hello {
+public class Startup {
 
   @RequestMapping(
       value = "/",
@@ -49,6 +49,6 @@ public class Hello {
   }
 
   public static void main(String[] args) {
-    SpringApplication.run(Hello.class, args);
+    SpringApplication.run(Startup.class, args);
   }
 }
