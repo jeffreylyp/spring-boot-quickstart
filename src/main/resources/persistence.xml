@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="resultSetLogEnabled" value="false" />
+        <property name="dataSourceLogEnabled" value="false" />
+        <property name="connectionLogEnabled" value="false" />
+        <property name="statementExecutableSqlLogEnable" value="true" />
+    </bean>
+
+    <bean id="dataSourceCommon" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init"
+          destroy-method="close">
+
+        <property name="driverClassName" value="${xs.datasource.driver-class-name}"/>
+        <property name="url" value="${xs.datasource.url}"/>
+        <property name="username" value="${xs.datasource.username}"/>
+        <property name="password" value="${xs.datasource.password}"/>
+
+        <property name="proxyFilters">
+            <list>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
+    </bean>
+</beans>
