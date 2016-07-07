@@ -4,14 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
-        <property name="resultSetLogEnabled" value="false" />
-        <property name="dataSourceLogEnabled" value="false" />
-        <property name="connectionLogEnabled" value="false" />
-        <property name="statementExecutableSqlLogEnable" value="true" />
+        <property name="resultSetLogEnabled" value="false"/>
+        <property name="dataSourceLogEnabled" value="false"/>
+        <property name="connectionLogEnabled" value="false"/>
+        <property name="statementExecutableSqlLogEnable" value="true"/>
     </bean>
 
-    <bean id="dataSourceCommon" class="com.alibaba.druid.pool.DruidDataSource"
-          init-method="init"
+    <bean id="dataSourceCommon" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
           destroy-method="close">
 
         <property name="driverClassName" value="${xs.datasource.driver-class-name}"/>
@@ -24,5 +23,24 @@
                 <ref bean="logFilter"/>
             </list>
         </property>
+    </bean>
+
+    <bean id="dataSourceX" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+
+        <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
+
+        <property name="proxyFilters">
+            <list>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="commonJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceCommon"/>
     </bean>
 </beans>
